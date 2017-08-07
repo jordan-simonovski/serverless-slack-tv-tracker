@@ -1,0 +1,25 @@
+{
+    "dev": {
+        "app_function": "run.app", 
+        "aws_region": "ap-southeast-2", 
+        "profile_name": "personal", 
+        "s3_bucket": "zappa-slacktvbot-2017",
+        "environment_variables": {
+            "tvdbAPIKey": "insert key here",
+            "tvdbUserKey": "insert user key here",
+            "tvdbUserName": "obama",
+            "slackWebhook": "webhookurl",
+            "timezone": "Australia/Sydney"
+        },
+        "events": [
+            {
+               "function": "run.postDiscussionThread", // Post Discussion Threads will be posted at 7pm every day (if they exist.)
+               "expression": "cron(0 9 * * ? *)" 
+            },
+            {
+                "function": "run.getShows", // Posts upcoming shows that will air on the day (according to timezone)
+                "expression": "cron(0 12 * * ? *)"
+            }
+        ]
+    }
+}
