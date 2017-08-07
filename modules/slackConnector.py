@@ -5,6 +5,9 @@ import json
 
 slackWebhook = os.environ.get("slackWebhook")
 
+def post_regular_slack(webhook, message):
+	requests.post(webhook, data=message)
+
 def isMultipleEpisodes(recentEpisodeJson):
 	return len(recentEpisodeJson['episodeList']) > 1
 

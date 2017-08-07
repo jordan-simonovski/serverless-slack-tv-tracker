@@ -1,3 +1,4 @@
+import json
 red = "#ff0000"
 blue = "#3AA3E3"
 spoilerThumb = "http://i.imgur.com/3s0QcvY.jpg"
@@ -99,3 +100,21 @@ def buildPostDiscussionThread(showName, showEpisode):
 		}]
 	}
 	return slackMessage
+
+def get_attachment(show):
+	attachment = {
+		"fields":[{"title": show['seriesName'],"value": show['overview']}],"image_url": show['banner'],
+		"actions": [{"name": "Add Show","text": "Add Show","type": "button","value": show['id']}]
+		}
+	return attachment
+
+def build_found_shows_message(shows):
+	message_attachments = []
+	for show in shows:
+		message_attachments.append(get_attachment(show))
+	slack_message = {
+		"response_type": "ephemeral",
+		"attachments": message_attachments
+	}
+	return json.dumps(slack_message)
+
