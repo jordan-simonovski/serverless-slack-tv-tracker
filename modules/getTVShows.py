@@ -15,12 +15,17 @@ def search_tv_shows(show_name, response_url):
 	slackConnector.post_regular_slack(response_url, get_tv_show_message(data))
 	get_tv_show_message(data)
 
+def truncate_overview(overview):
+	str_overview = str(overview)
+	overview = str_overview.split(".")
+	return str(overview[0]+".")
+
 def get_tv_show_message(data):
 	shows = []
 	for show in data['data']:
 		show_data = {}
 		show_data['seriesName'] = show['seriesName']
-		show_data['overview'] = show['overview']
+		show_data['overview'] = truncate_overview(show['overview'])
 		show_data['id'] = show['id']
 		show_data['banner'] = 'http://thetvdb.com/banners/'+show['banner']
 		shows.append(show_data)
