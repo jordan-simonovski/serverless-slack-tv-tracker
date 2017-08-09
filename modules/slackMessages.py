@@ -118,8 +118,17 @@ def build_found_shows_message(shows):
 	for show in shows:
 		message_attachments.append(get_attachment(show))
 	slack_message = {
-		"response_type": "ephemeral",
+		"response_type": "in_channel",
 		"attachments": message_attachments
+	}
+	return json.dumps(slack_message)
+
+def build_blocked_user_message(show_object):
+	user = "<@{0}|{1}>".format(show_object['user_id'], show_object['user_name'])
+	slack_message = {
+		"response_type": "in_channel",
+		"title": "Blocked user found",
+		"text": "{0} tried to add the show *{1}*. {0} isn't allowed to. Poor {0}. :troll:".format(user, show_object['show_name'])
 	}
 	return json.dumps(slack_message)
 
