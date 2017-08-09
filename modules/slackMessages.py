@@ -103,8 +103,13 @@ def buildPostDiscussionThread(showName, showEpisode):
 
 def get_attachment(show):
 	attachment = {
+		"callback_id": "add_show",
 		"fields":[{"title": show['seriesName'],"value": show['overview']}],"image_url": show['banner'],
-		"actions": [{"name": "Add Show","text": "Add Show","type": "button","value": show['id']}]
+		"actions": [{
+			"name": show['seriesName'],
+			"text": "Add Show",
+			"type": "button",
+			"value": show['id']}]
 		}
 	return attachment
 
@@ -115,6 +120,15 @@ def build_found_shows_message(shows):
 	slack_message = {
 		"response_type": "ephemeral",
 		"attachments": message_attachments
+	}
+	return json.dumps(slack_message)
+
+def build_added_show_message(show_object):
+	user = "<@{0}|{1}>".format(show_object['user_id'], show_object['user_name'])
+	slack_message = {
+		"response_type": "in_channel",
+		"title": "New Show Added!",
+		"text": "{0} just added the show *{1}* to the tracker.".format(user, show_object['show_name'])
 	}
 	return json.dumps(slack_message)
 

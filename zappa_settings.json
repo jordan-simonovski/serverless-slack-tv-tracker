@@ -20,6 +20,11 @@
                 "function": "run.getShows", // Posts upcoming shows that will air on the day (according to timezone)
                 "expression": "cron(0 12 * * ? *)"
             }
-        ]
+        ],
+        "extra_permissions": [{ 
+            "Effect": "Allow",
+            "Action": ["dynamodb:*"], 
+            "Resource": "*"
+        }]
     }
 }

@@ -4,11 +4,12 @@ from datetime import *
 import os
 import pytz
 import tvdbconnect
+import dynamo
 
 tz = pytz.timezone(os.environ.get("timezone"))
-seriesIds = ['269613', '253573', '277165', '75164', '273181', '269586', '110381', '305074', '267440', '260315']
+seriesIds = []
 baseUrl = "https://api.thetvdb.com"
-headers = ""
+headers = {}
 
 def getDate(dateString):
     if not dateString:
@@ -67,7 +68,8 @@ def getEpInfo(showInfo, showId):
     return episodeJson
 
 def postPostDiscussionThread():
-    headers = tvdbconnect.connect()
+    seriesIds = dynamo.get_tracked_shows()
+    headers.update(tvdbconnect.connect())
     for show in seriesIds:
         showInfo = getShowNameAndDescription(show)
         episodeInfo = getEpInfo(showInfo, show)
@@ -78,7 +80,8 @@ def postPostDiscussionThread():
     return "ok"
 
 def postUpcomingEpisodes():
-    headers = tvdbconnect.connect()
+    seriesIds = dynamo.get_tracked_shows()
+    headers.update(tvdbconnect.connect())
     for show in seriesIds:
         showInfo = getShowNameAndDescription(show)
         episodeInfo = getEpInfo(showInfo, show)

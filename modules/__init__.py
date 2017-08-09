@@ -1,1 +1,1 @@
-__all__ = ['tvdbconnect','getTVShows','getEpisodeUpdates']
+__all__ = ['tvdbconnect','getTVShows','getEpisodeUpdates','addTVShows']
