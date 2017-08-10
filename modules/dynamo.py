@@ -49,7 +49,7 @@ def list_shows():
 	)
 
 	found_shows = response['Items']
-	print(found_shows)
+	return found_shows
 
 def get_tracked_shows():
 	table = dynamo_resource.Table('shows')

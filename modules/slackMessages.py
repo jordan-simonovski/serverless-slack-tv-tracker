@@ -101,6 +101,29 @@ def buildPostDiscussionThread(showName, showEpisode):
 	}
 	return slackMessage
 
+def get_show_list_attachment(show_object):
+	user = "<@{0}|{1}>".format(show_object['userID'], show_object['userName'])
+	attachment = {
+		"callback_id": "list_shows",
+		"fields":[{
+			"title": show_object['showTitle'],
+			"value": "Added by {0}".format(user),
+			"short": "false"
+		}]
+	}
+	return attachment
+
+def build_show_list_message(show_list):
+	message_attachments = []
+	for show in show_list:
+		message_attachments.append(get_show_list_attachment(show))
+	slack_message = {
+		"response_type": "in_channel",
+		"title": "TV Shows being tracked:"
+		"attachments": message_attachments
+	}
+	return json.dumps(slack_message)
+
 def get_attachment(show):
 	attachment = {
 		"callback_id": "add_show",
@@ -118,7 +141,7 @@ def build_found_shows_message(shows):
 	for show in shows:
 		message_attachments.append(get_attachment(show))
 	slack_message = {
-		"response_type": "in_channel",
+		"response_type": "ephemeral",
 		"attachments": message_attachments
 	}
 	return json.dumps(slack_message)

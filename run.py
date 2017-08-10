@@ -22,6 +22,11 @@ def add_new_show():
 	addTVShows.add_new_tv_show(request.form['payload'])
 	return('',204)
 
+@app.route('/listshows', methods=['GET','POST'])
+def list_tracked_shows():
+	listTVShows.get_shows()
+	return('',204)
+
 def postDiscussionThread(req, res):
 	return getEpisodeUpdates.postPostDiscussionThread()
 

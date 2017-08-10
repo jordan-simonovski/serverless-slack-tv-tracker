@@ -13,7 +13,7 @@ def get_selected_show(payload):
 	return show_details
 
 def allowed_add_show(show_details):
-	blocked_users = []
+	blocked_users = ["U0AKCFWLW"]
 	if show_details['user_id'] in blocked_users:
 		return False
 	return True
@@ -23,7 +23,7 @@ def add_new_tv_show(request_payload):
 	show_details = get_selected_show(request_payload)
 	if allowed_add_show(show_details):
 		dynamo.add_show(show_details)
-		slackConnector.post_regular_slack(request_payload['response_url'], slackMessages.build_added_show_message(show_details))
+		slackConnector.post_to_channel(slackMessages.build_added_show_message(show_details))
 	else:
-		slackConnector.post_regular_slack(request_payload['response_url'], slackMessages.build_blocked_user_message(show_details))
+		slackConnector.post_to_channel(slackMessages.build_blocked_user_message(show_details))
 		
