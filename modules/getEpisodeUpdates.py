@@ -42,17 +42,24 @@ def getShowNameAndDescription(showId):
     return d['data']
 
 def getLocalAirTime(airTime):
-    m2 = datetime.strptime(airTime, '%I:%M %p')
-    americanAdjustment = timedelta(hours = 14)
-    localTime = m2+americanAdjustment
-    localisedAirTime = localTime.strftime("%I:%M %p")
-    return localisedAirTime
+    try:
+        m2 = datetime.strptime(airTime, '%I:%M %p')
+        americanAdjustment = timedelta(hours = 14)
+        localTime = m2+americanAdjustment
+        localisedAirTime = localTime.strftime("%I:%M %p")
+        return localisedAirTime
+    except ValueError:
+        default_time = "12:00 PM"
+        return datetime.strptime(default_time, '%I:%M %p')
 
 def getEpHasAired(localisedAirTime):
-    today = datetime.now(pytz.utc)
-    localisedToday = today.astimezone(tz)
-    todayTime = localisedToday.strftime("%I:%M %p")
-    return todayTime > localisedAirTime
+    try:
+        today = datetime.now(pytz.utc)
+        localisedToday = today.astimezone(tz)
+        todayTime = localisedToday.strftime("%I:%M %p")
+        return todayTime > localisedAirTime
+    except ValueError:
+        return False
 
 def getEpInfo(showInfo, showId):
     episodeJson = {}

@@ -119,7 +119,7 @@ def build_show_list_message(show_list):
 		message_attachments.append(get_show_list_attachment(show))
 	slack_message = {
 		"response_type": "in_channel",
-		"title": "TV Shows being tracked:"
+		"title": "TV Shows being tracked:",
 		"attachments": message_attachments
 	}
 	return json.dumps(slack_message)

@@ -21,9 +21,9 @@ def allowed_add_show(show_details):
 def add_new_tv_show(request_payload):
 	request_payload = json.loads(request_payload)
 	show_details = get_selected_show(request_payload)
-	if allowed_add_show(show_details):
-		dynamo.add_show(show_details)
-		slackConnector.post_to_channel(slackMessages.build_added_show_message(show_details))
-	else:
-		slackConnector.post_to_channel(slackMessages.build_blocked_user_message(show_details))
+	# if allowed_add_show(show_details):
+	dynamo.add_show(show_details)
+	slackConnector.post_to_channel(slackMessages.build_added_show_message(show_details))
+	# else:
+		# slackConnector.post_to_channel(slackMessages.build_blocked_user_message(show_details))
 		
