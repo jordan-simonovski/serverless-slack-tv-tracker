@@ -49,8 +49,7 @@ def getLocalAirTime(airTime):
         localisedAirTime = localTime.strftime("%I:%M %p")
         return localisedAirTime
     except ValueError:
-        default_time = "12:00 PM"
-        return datetime.strptime(default_time, '%I:%M %p')
+        return "12:00 PM"
 
 def getEpHasAired(localisedAirTime):
     try:
